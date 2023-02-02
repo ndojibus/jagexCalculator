@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.0)
+project(MyProject)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 20)
+add_library(Calculator src/Calculator.hpp src/Calculator.cpp)
+add_executable(Main main/main.cpp)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/tests.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+target_link_libraries(Main Calculator)
