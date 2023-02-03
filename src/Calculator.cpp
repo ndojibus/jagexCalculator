@@ -5,8 +5,11 @@
 #include<vector>
 #include<string>
 #include<climits>
+#include <exception>
 
 #include "Calculator.hpp"
+
+
 
 float operation(float a, float b, std::string op) {
     //Perform operation
@@ -127,6 +130,10 @@ void toPostFix(std::vector<std::string> input, std::vector<std::string>& postfix
                 }
                 operation.push(*it);
             }
+        }
+        else {
+            //there is a character that we don't know
+            throw CalculateException(ErrorCode::ParsingError);
         }
     }
     while (!operation.empty())

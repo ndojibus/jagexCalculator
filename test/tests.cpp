@@ -43,7 +43,7 @@ INSTANTIATE_TEST_CASE_P(
     CalculatorTest,
     testing::ValuesIn(ReadTestCasesFromDisk()));
 
-TEST_P(CalculatorTest, Calculate) {
+TEST_P(CalculatorTest, CalculateFromFile) {
     EXPECT_EQ(GetParam().second, calculate(GetParam().first));
 }
 
@@ -53,4 +53,9 @@ TEST(CalculatorTest, TestingPrecision) {
     float expected4 = 3.3333;
     EXPECT_EQ(expected3, calculate("10 / 3", 3));
     EXPECT_EQ(expected4, calculate("10 / 3", 4));
+}
+
+TEST(CalculatorTest, ErrorParsing)
+{
+    EXPECT_THROW(calculate("10 + s"), CalculateException);
 }
