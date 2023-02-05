@@ -2,14 +2,12 @@
 
 #include <string>
 
-
 enum class ErrorCode
 {
     ParsingError,
     OutOfRange,
     Undefined
 };
-
 
 struct CalculateException : public std::exception {
 
@@ -34,4 +32,4 @@ private:
 };
 
 
-float calculate(std::string input, int precision=3);
+double calculate(std::string input, int precision=3);

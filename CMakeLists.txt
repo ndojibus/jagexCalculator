@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(MyProject)
+project(JagexCalculatorTest)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 add_library(Calculator src/Calculator.hpp src/Calculator.cpp)
@@ -14,10 +14,10 @@ target_compile_definitions(gtest
     GTEST_LANG_CXX20
     GTEST_HAS_TR1_TUPLE=0
 )
-add_executable(tests)
-target_sources(tests
+add_executable(CalculatorTest)
+target_sources(CalculatorTest
   PRIVATE
-    test/tests.cpp
+    test/calculatorTests.cpp
 )
-set_target_properties(tests PROPERTIES COMPILE_FLAGS "${cxx_strict}")
-target_link_libraries(tests gtest gtest_main Calculator)
+set_target_properties(CalculatorTest PROPERTIES COMPILE_FLAGS "${cxx_strict}")
+target_link_libraries(CalculatorTest gtest gtest_main Calculator)

@@ -1,4 +1,4 @@
-#pragma once
+#include "Calculator.hpp"
 
 #include<cmath>
 #include<stack>
@@ -7,11 +7,7 @@
 #include<climits>
 #include <exception>
 
-#include "Calculator.hpp"
-
-
-
-float operation(float a, float b, std::string op) {
+double operation(double a, double b, std::string op) {
     //Perform operation
     if (op == "+")
         return b + a;
@@ -143,11 +139,11 @@ void toPostFix(std::vector<std::string> input, std::vector<std::string>& postfix
     }
 }
 
-float evaluatePostfix(std::vector<std::string> postFix)
+double evaluatePostfix(std::vector<std::string> postFix)
 {
-    float a, b;
+    double a, b;
 
-    std::stack<float> result;
+    std::stack<double> result;
 
     for (auto it = postFix.begin(); it != postFix.end(); it++)
     {
@@ -165,10 +161,9 @@ float evaluatePostfix(std::vector<std::string> postFix)
     }
 
     return result.top();
-
 }
 
-float calculate(std::string input, int precision) {
+double calculate(std::string input, int precision) {
 
     std::vector<std::string> tokenizedInput;
 

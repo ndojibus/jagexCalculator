@@ -15,7 +15,7 @@ int main()
             std::string::size_type pos = line.find(':');
             if (pos != std::string::npos)
             {
-                std::cout << " Line: " << line << " result" << calculate(line.substr(0, pos)) << std::endl;
+                std::cout << " Line: " << line << " result: " << calculate(line.substr(0, pos)) << std::endl;
             }
             else
             {

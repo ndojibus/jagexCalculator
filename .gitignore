@@ -36,6 +36,8 @@ CMakeCache.txt
 .settings/
 .idea/
 build/
+win_build/
 .vscode/
 *.pc
 .clangd/
+.vs

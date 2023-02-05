@@ -5,7 +5,7 @@
 #include<fstream>
 #include<string>
 
-typedef std::pair<std::string, float> TestParam;
+typedef std::pair<std::string, double> TestParam;
 
 class CalculatorTest : public testing::TestWithParam<TestParam> {};
 
@@ -21,7 +21,7 @@ std::vector<TestParam> ReadTestCasesFromDisk() {
             std::string::size_type pos = line.find(':');
             if (pos != std::string::npos)
             {
-                TestParam element{ line.substr(0, pos), stof(line.substr(pos + 1)) };
+                TestParam element{ line.substr(0, pos), stod(line.substr(pos + 1)) };
                 testParams.push_back(element);
             }
             else
@@ -38,19 +38,21 @@ std::vector<TestParam> ReadTestCasesFromDisk() {
     return testParams;
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     TestsSuiteFromFile,  // Instantiation name can be chosen arbitrarily.
     CalculatorTest,
     testing::ValuesIn(ReadTestCasesFromDisk()));
 
 TEST_P(CalculatorTest, CalculateFromFile) {
-    EXPECT_EQ(GetParam().second, calculate(GetParam().first));
+ 
+    EXPECT_DOUBLE_EQ(GetParam().second, calculate(GetParam().first));
 }
 
 TEST(CalculatorTest, TestingPrecision) {
 
-    float expected3 = 3.333;
-    float expected4 = 3.3333;
+    double expected3 = 3.333;
+    double expected4 = 3.3333;
+    EXPECT_EQ(expected3, calculate("10 / 3"));
     EXPECT_EQ(expected3, calculate("10 / 3", 3));
     EXPECT_EQ(expected4, calculate("10 / 3", 4));
 }
