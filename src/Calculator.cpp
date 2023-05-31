@@ -7,7 +7,7 @@
 #include<climits>
 #include <exception>
 
-double operation(double a, double b, std::string op) {
+double operation(double a, double b, std::string const& op) {
     //Perform operation
     if (op == "+")
         return b + a;
@@ -44,7 +44,7 @@ void tokenize(std::string const& str, std::vector<std::string>& out)
             {
                 out.push_back({ separator2 });
             }
-            if ((endIndex - startIndex) != 0)
+            if (endIndex> startIndex)
             {
                 subStr.append(str, startIndex, endIndex - startIndex);
                 out.push_back(subStr);
@@ -60,21 +60,21 @@ void tokenize(std::string const& str, std::vector<std::string>& out)
     }
 }
 
-bool isNumber(std::string s)
+bool isNumber(std::string const &s)
 {
     std::string::const_iterator it = s.begin();
     while (it != s.end() && (std::isdigit(*it) || (*it)=='.')) ++it;
     return (!s.empty() && it == s.end()) || (s[0] == '-' && s.length()> 1);
 }
 
-bool isOperator(std::string s)
+bool isOperator(std::string const &s)
 {
     if (s == "+" || s == "-" || s == "*" || s == "/" || s == "^")
         return true;//character is an operator
     return false;//not an operator
 }
 
-int priority(std::string operation)
+int priority(std::string const &operation)
 {
     if (operation == "+" || operation == "-")
         return 1;
@@ -85,7 +85,7 @@ int priority(std::string operation)
     return -1;
 }
 
-void toPostFix(std::vector<std::string> input, std::vector<std::string>& postfix)
+void toPostFix(std::vector<std::string> const & input, std::vector<std::string>& postfix)
 {
     std::stack<std::string> operation;
 
@@ -139,11 +139,12 @@ void toPostFix(std::vector<std::string> input, std::vector<std::string>& postfix
     }
 }
 
-double evaluatePostfix(std::vector<std::string> postFix)
+double evaluatePostfix(std::vector<std::string> const &postFix)
 {
     double a, b;
-
-    std::stack<double> result;
+    std::vector<double> vec_support;
+    vec_support.reserve(postFix.size());
+    std::stack<double, std::vector<double>> result{ std::move(vec_support) };
 
     for (auto it = postFix.begin(); it != postFix.end(); it++)
     {
@@ -156,24 +157,30 @@ double evaluatePostfix(std::vector<std::string> postFix)
         }
         else if (isNumber(*it))
         {
-            result.push(stof(*it));
+            result.push(stod(*it));
         }
     }
 
     return result.top();
 }
 
-double calculate(std::string input, int precision) {
+double calculate(std::string const &input, int precision) {
 
     std::vector<std::string> tokenizedInput;
+    tokenizedInput.reserve(input.size());
 
     tokenize(input, tokenizedInput);
 
     std::vector<std::string> postFix;
+    postFix.reserve(input.size());
 
     toPostFix(tokenizedInput, postFix);
 
-    float result = evaluatePostfix(postFix);
+    double postfixResult = evaluatePostfix(postFix);
 
-    return floorf(result * (pow(10,precision))) / pow(10, precision);
+    postfixResult *= pow(10, precision);
+
+    double result = (long)postfixResult / pow(10, precision);
+
+    return result;
 }

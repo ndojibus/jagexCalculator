@@ -32,4 +32,4 @@ private:
 };
 
 
-double calculate(std::string input, int precision=3);
+double calculate(std::string const &input, int precision=3);

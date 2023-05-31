@@ -55,6 +55,8 @@ TEST(CalculatorTest, TestingPrecision) {
     EXPECT_EQ(expected3, calculate("10 / 3"));
     EXPECT_EQ(expected3, calculate("10 / 3", 3));
     EXPECT_EQ(expected4, calculate("10 / 3", 4));
+    EXPECT_EQ(-18, calculate("(-20 * 1.8) / 2 "));
+
 }
 
 TEST(CalculatorTest, ErrorParsing)
